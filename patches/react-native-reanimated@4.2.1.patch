@@ -1,0 +1,9 @@
+diff --git a/mock.js b/mock.js
+index 9c11a66b2e4873f0919a37d01961e0896d270ce0..cd5df7d77eef0c229538cafb0c0ba6b206a7ed7e 100644
+--- a/mock.js
++++ b/mock.js
+@@ -9,3 +9,4 @@ module.exports = {
+ 
+   default: { ...Animated },
+ };
++

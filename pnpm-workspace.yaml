@@ -1,1 +1,2 @@
-nodeLinker: hoisted
+patchedDependencies:
+  react-native-reanimated@4.2.1: patches/react-native-reanimated@4.2.1.patch
