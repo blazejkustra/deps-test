@@ -1,2 +1,5 @@
+packages:
+  - '.'
 patchedDependencies:
   react-native-reanimated@4.2.1: patches/react-native-reanimated@4.2.1.patch
+  expo-modules-autolinking@55.0.11: patches/expo-modules-autolinking@55.0.11.patch

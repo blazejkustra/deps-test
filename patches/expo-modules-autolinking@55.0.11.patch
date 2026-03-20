@@ -1,0 +1,50 @@
+diff --git a/build/autolinking/findModules.js b/build/autolinking/findModules.js
+index d4ba449206366a146e642697c0b67b82d9256c2f..cdd6c6d5e81e86e28bd02cf0c4d1a21e8468a5e7 100644
+--- a/build/autolinking/findModules.js
++++ b/build/autolinking/findModules.js
+@@ -13,12 +13,12 @@ async function resolveExpoModule(resolution, platform, excludeNames) {
+     if (expoModuleConfig && expoModuleConfig.supportsPlatform(platform)) {
+         return {
+             name: resolution.name,
+-            path: resolution.path,
++            path: resolution.originPath,
+             version: resolution.version,
+             config: expoModuleConfig,
+             duplicates: resolution.duplicates?.map((duplicate) => ({
+                 name: duplicate.name,
+-                path: duplicate.path,
++                path: duplicate.originPath,
+                 version: duplicate.version,
+             })) ?? [],
+         };
+diff --git a/build/reactNativeConfig/reactNativeConfig.js b/build/reactNativeConfig/reactNativeConfig.js
+index 6b666156f03ca03043a4a69fbaa286db061dccd3..605ca598fd9b456cec5416eb99499dd0219a421e 100644
+--- a/build/reactNativeConfig/reactNativeConfig.js
++++ b/build/reactNativeConfig/reactNativeConfig.js
+@@ -61,7 +61,7 @@ async function resolveReactNativeModule(resolution, projectConfig, platform, exc
+     }
+     let platformData = null;
+     if (platform === 'android') {
+-        platformData = await (0, androidResolver_1.resolveDependencyConfigImplAndroidAsync)(resolution.path, reactNativeConfig.platforms?.android, maybeExpoModuleConfig);
++        platformData = await (0, androidResolver_1.resolveDependencyConfigImplAndroidAsync)(resolution.originPath, reactNativeConfig.platforms?.android, maybeExpoModuleConfig);
+     }
+     else if (platform === 'ios') {
+         platformData = await (0, iosResolver_1.resolveDependencyConfigImplIosAsync)(resolution, reactNativeConfig.platforms?.ios, maybeExpoModuleConfig);
+@@ -70,7 +70,7 @@ async function resolveReactNativeModule(resolution, projectConfig, platform, exc
+         platformData = await (0, webResolver_1.checkDependencyWebAsync)(resolution, reactNativeConfig, maybeExpoModuleConfig);
+     }
+     return (platformData && {
+-        root: resolution.path,
++        root: resolution.originPath,
+         name: resolution.name,
+         platforms: {
+             [platform]: platformData,
+@@ -118,7 +118,7 @@ async function createReactNativeConfigAsync({ appRoot, sourceDir, autolinkingOpt
+     }
+     return {
+         root: appRoot,
+-        reactNativePath: resolutions['react-native']?.path,
++        reactNativePath: resolutions['react-native']?.originPath,
+         dependencies,
+         project: await resolveAppProjectConfigAsync(appRoot, autolinkingOptions.platform, sourceDir),
+     };
